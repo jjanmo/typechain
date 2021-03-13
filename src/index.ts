@@ -1,13 +1,22 @@
-const name = 'jjanmo',
-  age = 25,
-  hobbies = ['yoga', 'reading', 'game'];
+interface Human {
+  name: string;
+  age: number;
+  hobbies: string[];
+}
 
-const introduce = (name: string, age: number, hobbies?: string[]): string => {
+const person = {
+  name: 'jjanmo',
+  age: 25,
+  hobbies: ['yoga', 'reading', 'game'],
+};
+
+const introduce = (person: Human): string => {
   return `
-    My name is ${name}, I'm ${age} and enjoy ${hobbies.join(', ')}
+    This is Object type 🔥
+    My name is ${person.name}, I'm ${person.age} and enjoy ${person.hobbies.join(', ')}
   `;
 };
 
-console.log(introduce(name, age, hobbies));
+console.log(introduce(person));
 
 export {};
