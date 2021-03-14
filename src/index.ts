@@ -1,29 +1,34 @@
-class Human {
-  public name: string;
-  private _age: number;
-  public hobbies: string[];
+import * as CryptoJS from 'crypto-js';
 
-  constructor(name: string, age: number, hobbies: string[]) {
-    this.name = name;
-    this._age = age;
-    this.hobbies = hobbies;
-  }
+class Block {
+  public index: number;
+  public hash: string;
+  public previousHash: string;
+  public data: string;
+  public timestamp: number;
 
-  //getter
-  get age(): number {
-    return this._age;
+  static calculateHash = (index: number, previousHash: string, timestamp: number, data: string): string =>
+    CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+
+  constructor(index: number, hash: string, previousHash: string, data: string, timestamp: number) {
+    this.index = index;
+    this.hash = hash;
+    this.previousHash = previousHash;
+    this.data = data;
+    this.timestamp = timestamp;
   }
 }
 
-const jjanmo = new Human('jjanmo', 25, ['yoga', 'reading', 'game']);
+const genensisBlock: Block = new Block(
+  0,
+  new Date().getTime().toString(),
+  '',
+  'Hello Blockchain',
+  new Date().getTime()
+);
 
-const introduce = (person: Human): string => {
-  return `
-    This is Class 🔥
-    My name is ${person.name}, I'm ${person.age} and enjoy ${person.hobbies.join(', ')}
-  `;
-};
+const blockchain: Block[] = [genensisBlock];
 
-console.log(introduce(jjanmo));
+console.log(blockchain);
 
 export {};
