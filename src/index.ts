@@ -1,16 +1,6 @@
 import * as CryptoJS from 'crypto-js';
 
 class Block {
-  static calculateHash = (index: number, previousHash: string, timestamp: number, data: string): string =>
-    CryptoJS.SHA256(index + previousHash + timestamp + data).toString(); // //
-
-  static validateStructure = (block: Block): boolean =>
-    typeof block.index === 'number' &&
-    typeof block.hash === 'string' &&
-    typeof block.previousHash === 'string' &&
-    typeof block.data === 'string' &&
-    typeof block.timestamp === 'number';
-
   public index: number;
   public hash: string;
   public previousHash: string;
@@ -24,6 +14,16 @@ class Block {
     this.data = data;
     this.timestamp = timestamp;
   }
+
+  static calculateHash = (index: number, previousHash: string, timestamp: number, data: string): string =>
+    CryptoJS.SHA256(index + previousHash + timestamp + data).toString(); // //
+
+  static validateStructure = (block: Block): boolean =>
+    typeof block.index === 'number' &&
+    typeof block.hash === 'string' &&
+    typeof block.previousHash === 'string' &&
+    typeof block.data === 'string' &&
+    typeof block.timestamp === 'number';
 }
 
 //최초 블럭
@@ -53,18 +53,14 @@ const getHashForBlock = (block: Block): string =>
 
 const isValidationOfBlock = (candidateBlock: Block, previousBlock: Block): boolean => {
   if (!Block.validateStructure(candidateBlock)) {
-    console.log('111');
     return false;
   } else if (previousBlock.index + 1 !== candidateBlock.index) {
-    console.log('222');
     return false;
   } else if (previousBlock.hash !== candidateBlock.previousHash) {
     console.log(previousBlock.hash);
     console.log(candidateBlock.previousHash);
-    console.log('333');
     return false;
   } else if (getHashForBlock(candidateBlock) !== candidateBlock.hash) {
-    console.log('444');
     return false;
   } else return true;
 };
