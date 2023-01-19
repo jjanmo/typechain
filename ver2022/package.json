@@ -4,6 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "start": "node ./build/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1"
   }
 }
